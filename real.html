@@ -1,0 +1,956 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="description" content="Modern real estate website for buying, selling and renting properties.">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <title>HomeNest Realty</title>
+  <style>
+    :root {
+      --primary: #0d6efd;
+      --secondary: #0b2545;
+      --dark: #132238;
+      --light: #f4f7fb;
+      --text: #243447;
+      --muted: #6c757d;
+      --white: #ffffff;
+      --shadow: 0 12px 30px rgba(10, 35, 66, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--light);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a { text-decoration: none; }
+
+    .navbar {
+      background: rgba(255,255,255,0.95);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      animation: fadeDown 1s ease;
+    }
+
+    @keyframes fadeDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .brand {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--secondary);
+    }
+
+    .brand span { color: var(--primary); }
+
+    .nav-link {
+      color: var(--text);
+      font-weight: 600;
+      margin-left: 12px;
+    }
+
+    .nav-link:hover { color: var(--primary); }
+
+    .hero {
+      background: linear-gradient(rgba(9, 26, 44, 0.65), rgba(9, 26, 44, 0.65)), url('https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+      min-height: 620px;
+      display: flex;
+      align-items: center;
+      color: var(--white);
+    }
+
+    .hero-box {
+      max-width: 680px;
+      padding: 30px 0;
+    }
+
+    .hero h1 {
+      font-size: 3.2rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 18px;
+      animation: slideInLeft 1s ease;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 25px;
+      animation: slideInRight 1.2s ease;
+    }
+
+    .hero .d-flex {
+      animation: fadeInUp 1.5s ease;
+    }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(25px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      border: none;
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-weight: 600;
+    }
+
+    .btn-outline-light {
+      border-radius: 30px;
+      padding: 12px 24px;
+      font-weight: 600;
+    }
+
+    .search-panel {
+      background: var(--white);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      margin-top: -40px;
+      position: relative;
+      z-index: 2;
+      padding: 18px 20px;
+    }
+
+    .search-panel .form-control,
+    .search-panel .form-select {
+      min-height: 52px;
+      border-radius: 12px;
+      border: 1px solid #dcdee5;
+      background: #fff;
+    }
+
+    .stats { padding: 70px 0 40px; }
+
+    .stat-box {
+      background: var(--white);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: 25px 20px;
+      text-align: center;
+      height: 100%;
+    }
+
+    .stat-box i {
+      font-size: 2.2rem;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+
+    .stat-box h3 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 0;
+      color: var(--secondary);
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .section-title h2 {
+      font-size: 2.3rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 10px;
+    }
+
+    .section-title p {
+      color: var(--muted);
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .property-card {
+      background: var(--white);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      height: 100%;
+      animation: zoomIn 0.8s ease;
+    }
+
+    .property-card:hover {
+      transform: translateY(-8px) scale(1.01);
+      box-shadow: 0 16px 40px rgba(10, 35, 66, 0.18);
+    }
+
+    @keyframes zoomIn {
+      from {
+        opacity: 0;
+        transform: scale(0.96);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .property-card img {
+      height: 240px;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .property-body { padding: 22px 20px 18px; }
+
+    .tag {
+      display: inline-block;
+      background: rgba(13, 110, 253, 0.1);
+      color: var(--primary);
+      border-radius: 20px;
+      padding: 6px 12px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .property-body h4 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--dark);
+    }
+
+    .location {
+      color: var(--muted);
+      margin-bottom: 12px;
+      font-size: 0.95rem;
+    }
+
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 16px;
+      border-top: 1px solid #edf0f5;
+      padding-top: 14px;
+    }
+
+    .price {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .details {
+      display: flex;
+      gap: 16px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .why-us {
+      padding: 90px 0;
+      background: #edf4ff;
+    }
+
+    .feature-box {
+      background: var(--white);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: 27px 20px;
+      text-align: center;
+      height: 100%;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .feature-box:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 18px 35px rgba(10, 35, 66, 0.14);
+    }
+
+    .feature-box i {
+      font-size: 2.3rem;
+      color: var(--primary);
+      margin-bottom: 15px;
+    }
+
+    .feature-box h4 {
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--dark);
+    }
+
+    .security {
+      padding: 90px 0;
+      background: linear-gradient(135deg, #0d1827, #122b4d);
+      color: var(--white);
+    }
+
+    .security-box {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 18px;
+      padding: 25px 20px;
+      height: 100%;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .security-box:hover {
+      transform: translateY(-8px);
+      border-color: rgba(124, 201, 255, 0.6);
+    }
+
+    .security-box i {
+      font-size: 2.1rem;
+      color: #7cc9ff;
+      margin-bottom: 12px;
+    }
+
+    .security-box h4 {
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .security-box p {
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 0;
+    }
+
+    .categories { padding: 90px 0; }
+
+    .category-box {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      height: 280px;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+
+    .category-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.72);
+    }
+
+    .category-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(transparent, rgba(10, 30, 50, 0.8));
+      display: flex;
+      align-items: end;
+      padding: 22px;
+      color: var(--white);
+    }
+
+    .category-overlay h4 {
+      margin: 0;
+      font-weight: 700;
+      font-size: 1.6rem;
+    }
+
+    .process {
+      padding: 90px 0;
+      background: var(--dark);
+      color: var(--white);
+    }
+
+    .process .section-title p,
+    .process .step-box p { color: rgba(255,255,255,0.8); }
+
+    .step-box {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      padding: 25px 20px;
+      height: 100%;
+    }
+
+    .step-number {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    .testimonials { padding: 90px 0; }
+
+    .testimonial-box {
+      background: var(--white);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 26px 20px;
+      height: 100%;
+      transition: transform 0.3s ease;
+    }
+
+    .testimonial-box:hover {
+      transform: translateY(-8px);
+    }
+
+    .stars {
+      color: #f4b740;
+      margin-bottom: 12px;
+      font-size: 1rem;
+    }
+
+    .person {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .person img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .cta {
+      padding: 90px 0;
+      background: linear-gradient(135deg, #0d6efd, #0b2545);
+      color: var(--white);
+    }
+
+    .cta h2 {
+      font-size: 2.3rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .contact-form {
+      background: var(--white);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 30px;
+      animation: pulseCard 2.5s infinite alternate;
+    }
+
+    @keyframes pulseCard {
+      from {
+        box-shadow: 0 12px 30px rgba(10, 35, 66, 0.12);
+      }
+      to {
+        box-shadow: 0 18px 36px rgba(13, 110, 253, 0.18);
+      }
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      border-radius: 12px;
+      border: 1px solid #dfe5ef;
+      padding: 12px 14px;
+      margin-bottom: 14px;
+    }
+
+    .footer {
+      background: #0d1827;
+      color: rgba(255,255,255,0.8);
+      padding: 40px 0 25px;
+      animation: fadeIn 1.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .footer h5 {
+      color: var(--white);
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    .footer a,
+    .footer li { color: rgba(255,255,255,0.8); }
+
+    .footer a:hover { color: var(--white); }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.3rem; }
+      .search-panel { margin-top: 0; }
+      .section-title h2 { font-size: 1.9rem; }
+      .cta h2 { font-size: 1.9rem; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand brand" href="#">Home<span>Nest</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto align-items-center">
+          <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#properties">Properties</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#security">Cyber Security</a></li>
+          <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+          <li class="nav-item ms-2"><a class="btn btn-primary" href="#contact">Book a Visit</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" id="home">
+    <div class="container">
+      <div class="hero-box">
+        <h1>Find Your Dream Home Today</h1>
+        <p>Explore premium homes, apartments, villas, and investment-ready properties in the best neighborhoods.</p>
+        <div class="d-flex gap-3 flex-wrap">
+          <a href="#properties" class="btn btn-primary">Explore Properties</a>
+          <a href="#about" class="btn btn-outline-light">Learn More</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="search-panel container">
+    <div class="row g-3 align-items-end">
+      <div class="col-lg-3 col-md-6">
+        <label class="form-label fw-bold">Location</label>
+        <input type="text" class="form-control" placeholder="City or area">
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <label class="form-label fw-bold">Property Type</label>
+        <select class="form-select">
+          <option>Apartment</option>
+          <option>Villa</option>
+          <option>Office</option>
+          <option>Commercial</option>
+        </select>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <label class="form-label fw-bold">Price Range</label>
+        <select class="form-select">
+          <option>$200k - $500k</option>
+          <option>$500k - $1M</option>
+          <option>$1M - $2M</option>
+          <option>$2M+</option>
+        </select>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <button class="btn btn-primary w-100" style="height:52px; border-radius:12px;">Search</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="container">
+      <div class="row g-4" id="statsContainer"></div>
+    </div>
+  </section>
+
+  <section class="container py-5" id="properties">
+    <div class="section-title">
+      <h2>Featured Properties</h2>
+      <p>Discover exclusive homes and investment opportunities carefully selected for quality, location, and value.</p>
+    </div>
+    <div class="row g-4" id="propertyContainer"></div>
+  </section>
+
+  <section class="why-us" id="about">
+    <div class="container">
+      <div class="section-title">
+        <h2>Why Choose Us</h2>
+        <p>We combine local insight, transparent advice, and a strong network to help you make the right move.</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-lg-4 col-md-6">
+          <div class="feature-box">
+            <i class="fa-solid fa-shield-heart"></i>
+            <h4>Trusted Guidance</h4>
+            <p class="mb-0 text-muted">Our experts provide honest and reliable advice throughout your property journey.</p>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="feature-box">
+            <i class="fa-solid fa-map-location-dot"></i>
+            <h4>Prime Locations</h4>
+            <p class="mb-0 text-muted">We focus on neighborhoods that balance growth, convenience, and lifestyle value.</p>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="feature-box">
+            <i class="fa-solid fa-handshake"></i>
+            <h4>End-to-End Support</h4>
+            <p class="mb-0 text-muted">From search to closing, we ensure a smooth and transparent experience for every client.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="security" id="security">
+    <div class="container">
+      <div class="section-title">
+        <h2 class="text-white">Cyber Security & Smart Protection</h2>
+        <p>We protect your property, data, and digital systems with modern security solutions that give peace of mind.</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-lg-4 col-md-6">
+          <div class="security-box">
+            <i class="fa-solid fa-shield-halved"></i>
+            <h4>Threat Monitoring</h4>
+            <p>24/7 monitoring for suspicious activity, security alerts, and risk prevention across your smart property system.</p>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="security-box">
+            <i class="fa-solid fa-lock"></i>
+            <h4>Access Control</h4>
+            <p>Smart entry systems and secure access management for homes, offices, and gated communities.</p>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="security-box">
+            <i class="fa-solid fa-network-wired"></i>
+            <h4>Digital Protection</h4>
+            <p>Cybersecurity for property management platforms, smart devices, online transactions, and private networks.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="categories" id="services">
+    <div class="container">
+      <div class="section-title">
+        <h2>Browse by Category</h2>
+        <p>Whether you are buying a family home or a commercial property, we have options that suit your goals.</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-lg-4 col-md-6">
+          <div class="category-box">
+            <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=900&q=80" alt="Family Homes">
+            <div class="category-overlay">
+              <h4>Family Homes</h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="category-box">
+            <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=900&q=80" alt="Luxury Villas">
+            <div class="category-overlay">
+              <h4>Luxury Villas</h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="category-box">
+            <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=80" alt="Commercial Spaces">
+            <div class="category-overlay">
+              <h4>Commercial Spaces</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="process">
+    <div class="container">
+      <div class="section-title">
+        <h2 class="text-white">How It Works</h2>
+        <p>Our simple process makes buying and selling property smooth, fast, and stress-free.</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-lg-4 col-md-6">
+          <div class="step-box">
+            <div class="step-number">1</div>
+            <h4>Consultation</h4>
+            <p>Tell us your needs, lifestyle, and budget, and we will guide you toward the best fit.</p>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="step-box">
+            <div class="step-number">2</div>
+            <h4>Shortlist</h4>
+            <p>We present high-potential options that match your goals, timing, and affordability.</p>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="step-box">
+            <div class="step-number">3</div>
+            <h4>Close Deal</h4>
+            <p>From paperwork to final handover, we handle each step with transparency and care.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonials">
+    <div class="container">
+      <div class="section-title">
+        <h2>Client Testimonials</h2>
+        <p>Happy clients trust us to deliver exceptional results and a smooth real estate experience.</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-lg-4 col-md-6">
+          <div class="testimonial-box">
+            <div class="stars">★★★★★</div>
+            <p class="text-muted">“The team understood exactly what we wanted. We found our dream home within two weeks and the process was seamless.”</p>
+            <div class="person">
+              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80" alt="Sarah">
+              <div>
+                <strong>Sarah L.</strong><br>
+                <small class="text-muted">Home Buyer</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="testimonial-box">
+            <div class="stars">★★★★★</div>
+            <p class="text-muted">“Their market knowledge was excellent. We sold our property above asking price with minimal hassle.”</p>
+            <div class="person">
+              <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80" alt="Mark">
+              <div>
+                <strong>Mark T.</strong><br>
+                <small class="text-muted">Property Seller</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="testimonial-box">
+            <div class="stars">★★★★★</div>
+            <p class="text-muted">“The professionals were responsive, honest, and expert in every step. Highly recommended for investments.”</p>
+            <div class="person">
+              <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=200&q=80" alt="Emma">
+              <div>
+                <strong>Emma R.</strong><br>
+                <small class="text-muted">Investor</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" id="contact">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-6">
+          <h2>Let’s Find the Right Property for You</h2>
+          <p class="mb-0 text-white-50">Book a consultation with our team and get expert guidance tailored to your goals and budget.</p>
+        </div>
+        <div class="col-lg-6">
+          <div class="contact-form">
+            <h4 class="mb-3 text-dark">Request a Callback</h4>
+            <input type="text" class="form-control" placeholder="Your Name">
+            <input type="email" class="form-control" placeholder="Email Address">
+            <textarea class="form-control" rows="4" placeholder="Tell us what you are looking for"></textarea>
+            <button class="btn btn-primary w-100">Submit Request</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-4">
+          <h5>HomeNest</h5>
+          <p>Expert real estate solutions for home buyers, sellers, renters, and investors.</p>
+        </div>
+        <div class="col-lg-2 col-md-4">
+          <h5>Company</h5>
+          <ul class="list-unstyled">
+            <li><a href="#">About</a></li>
+            <li><a href="#">Agents</a></li>
+            <li><a href="#">Careers</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-2 col-md-4">
+          <h5>Services</h5>
+          <ul class="list-unstyled">
+            <li><a href="#">Buy</a></li>
+            <li><a href="#">Sell</a></li>
+            <li><a href="#">Rent</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-4 col-md-4">
+          <h5>Contact</h5>
+          <ul class="list-unstyled">
+            <li>123 Market Street, New York</li>
+            <li>+1 (555) 123-4567</li>
+            <li>hello@homenest.com</li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-top border-secondary mt-4 pt-3 text-center small">
+        © 2026 HomeNest Realty. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const stats = [
+      { icon: 'fa-solid fa-house', value: '1200+', label: 'Properties Sold' },
+      { icon: 'fa-solid fa-user-tie', value: '350+', label: 'Expert Agents' },
+      { icon: 'fa-solid fa-city', value: '45', label: 'Prime Locations' },
+      { icon: 'fa-solid fa-award', value: '98%', label: 'Client Satisfaction' }
+    ];
+
+    const properties = [
+      {
+        title: 'Luxury Villa',
+        type: 'For Sale',
+        location: 'Downtown, California',
+        price: '$1,250,000',
+        beds: 4,
+        baths: 3,
+        area: '3200 sq ft',
+        image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=900&q=80'
+      },
+      {
+        title: 'Modern Apartment',
+        type: 'For Rent',
+        location: 'Brooklyn, New York',
+        price: '$2,400/mo',
+        beds: 3,
+        baths: 2,
+        area: '1800 sq ft',
+        image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=900&q=80'
+      },
+      {
+        title: 'Office Space',
+        type: 'Commercial',
+        location: 'Chicago, Illinois',
+        price: '$850,000',
+        beds: 0,
+        baths: 0,
+        area: '2500 sq ft',
+        image: 'https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=900&q=80'
+      },
+      {
+        title: 'Family Home',
+        type: 'For Sale',
+        location: 'Austin, Texas',
+        price: '$670,000',
+        beds: 5,
+        baths: 3,
+        area: '2900 sq ft',
+        image: 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=900&q=80'
+      },
+      {
+        title: 'Beach House',
+        type: 'For Sale',
+        location: 'Miami, Florida',
+        price: '$980,000',
+        beds: 4,
+        baths: 3,
+        area: '2600 sq ft',
+        image: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=900&q=80'
+      },
+      {
+        title: 'Cozy Studio',
+        type: 'For Rent',
+        location: 'Seattle, Washington',
+        price: '$1,800/mo',
+        beds: 1,
+        baths: 1,
+        area: '700 sq ft',
+        image: 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=80'
+      }
+    ];
+
+    const statsContainer = document.getElementById('statsContainer');
+    stats.forEach(stat => {
+      const col = document.createElement('div');
+      col.className = 'col-lg-3 col-md-6';
+      col.innerHTML = `
+        <div class="stat-box">
+          <i class="${stat.icon}"></i>
+          <h3>${stat.value}</h3>
+          <p class="mb-0 text-muted">${stat.label}</p>
+        </div>
+      `;
+      statsContainer.appendChild(col);
+    });
+
+    const propertyContainer = document.getElementById('propertyContainer');
+    properties.forEach((property, index) => {
+      const col = document.createElement('div');
+      col.className = 'col-lg-4 col-md-6';
+      col.style.animationDelay = `${index * 0.15}s`;
+      col.innerHTML = `
+        <div class="property-card">
+          <img src="${property.image}" alt="${property.title}">
+          <div class="property-body">
+            <span class="tag">${property.type}</span>
+            <h4>${property.title}</h4>
+            <div class="location"><i class="fa-solid fa-location-dot me-2"></i>${property.location}</div>
+            <div class="details">
+              <span><i class="fa-solid fa-bed me-2"></i>${property.beds} Beds</span>
+              <span><i class="fa-solid fa-bath me-2"></i>${property.baths} Baths</span>
+            </div>
+            <div class="price-row">
+              <div class="price">${property.price}</div>
+              <a href="#" class="btn btn-primary btn-sm">View</a>
+            </div>
+          </div>
+        </div>
+      `;
+      propertyContainer.appendChild(col);
+    });
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.min.js"></script>
+</body>
+</html>
